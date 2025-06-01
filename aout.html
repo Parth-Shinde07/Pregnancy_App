@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pregnancy Care - Home Page</title>
+    <style>
+        :root {
+            --peach: #FFDAB9;
+            --lavender: #E6E6FA;
+            --soft-white: #F8F9FA;
+            --sky-blue: #87CEEB;
+            --shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+            background: url('https://i.imgur.com/your-image-url.jpg') no-repeat center center fixed; /* Replace with actual image URL */
+            background-size: cover;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            gap: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .overlay {
+            background: rgba(248, 249, 250, 0.9); /* Soft white overlay for readability */
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        h2, h3 {
+            font-family: 'Playfair Display', serif;
+            color: #5A4B7A;
+        }
+
+        /* Welcome Section (Expanded) */
+        .welcome {
+            text-align: center;
+            padding: 60px 40px;
+            background: rgba(255, 218, 185, 0.8); /* Semi-transparent peach for overlay effect */
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            height: 300px; /* Increased height for a larger section */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .welcome h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .welcome p {
+            font-size: 1.2em;
+            color: #333;
+            max-width: 800px;
+        }
+
+        /* Top Right Navigation */
+        .top-right-nav {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--lavender);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            z-index: 1000;
+        }
+
+        .top-right-nav a {
+            display: block;
+            margin: 10px 0;
+            color: #5A4B7A;
+            text-decoration: none;
+        }
+
+        .top-right-nav a:hover {
+            color: var(--peach);
+        }
+
+        /* Section 1: Patient Details */
+        .patient-details {
+            background: var(--lavender);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .save-button {
+            margin-top: 20px;
+            padding: 12px 24px;
+            background: var(--peach);
+            color: #333;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .save-button:hover {
+            background: var(--sky-blue);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .saved-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            display: none;
+        }
+
+        .saved-info p {
+            margin: 5px 0;
+            font-size: 0.9em;
+            color: #333;
+        }
+
+        /* Section 2: Roadmap */
+        .timeline {
+            padding: 4rem 2rem;
+            background: var(--lavender);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .road-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .road {
+            height: 10px;
+            background: repeating-linear-gradient(90deg, #fff 0px, #fff 20px, transparent 20px, transparent 40px);
+            position: relative;
+            border-radius: 5px;
+        }
+
+        .car {
+            width: 50px;
+            height: 30px;
+            background: var(--peach);
+            position: absolute;
+            top: -10px;
+            left: 0;
+            border-radius: 5px;
+            transition: left 0.5s ease;
+        }
+
+        .car::after, .car::before {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #333;
+            border-radius: 50%;
+            bottom: -5px;
+        }
+
+        .car::after { left: 5px; }
+        .car::before { right: 5px; }
+
+        .stages {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .stage {
+            flex: 1;
+            text-align: center;
+            padding: 1rem;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            max-width: 22%;
+        }
+
+        .stage:hover {
+            transform: translateY(-5px);
+        }
+
+        .stage.active {
+            background: var(--peach);
+            color: #fff;
+        }
+
+        .stage-detail {
+            display: none;
+            margin-top: 2rem;
+            padding: 2rem;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .stage-detail.active {
+            display: block;
+        }
+
+        .week-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .week-btn {
+            padding: 0.5rem 1rem;
+            background: var(--sky-blue);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .week-btn:hover {
+            background: var(--peach);
+        }
+
+        .week-btn.active {
+            background: var(--peach);
+        }
+
+        .week-detail {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--soft-white);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .week-detail.active {
+            display: block;
+        }
+
+        .week-detail a {
+            color: #5A4B7A;
+            text-decoration: underline;
+        }
+
+        .week-detail table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .week-detail th, .week-detail td {
+            padding: 0.5rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .week-detail th {
+            background: var(--lavender);
+            color: #5A4B7A;
+            width: 20%;
+        }
+
+        .week-detail td {
+            background: #fff;
+        }
+
+        /* Section 3: Enhanced Calendar */
+        .calendar-section {
+            background: linear-gradient(135deg, var(--lavender), var(--soft-white));
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--peach);
+        }
+
+        .calendar-header h2 {
+            font-size: 1.8em;
+            margin: 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        #currentTime {
+            font-size: 1.1em;
+            color: #5A4B7A;
+            font-weight: 500;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .month {
+            background: #fff;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease;
+        }
+
+        .month:hover {
+            transform: translateY(-5px);
+        }
+
+        .month h3 {
+            margin: 0 0 15px;
+            font-size: 1.3em;
+            color: #5A4B7A;
+            text-align: center;
+            background: var(--peach);
+            padding: 10px;
+            border-radius: 10px;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+        }
+
+        .month div {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .month span {
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            border-radius: 50%;
+            font-size: 1em;
+            color: #333;
+            background: #f5f5f5;
+            transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .month span:hover {
+            background: var(--sky-blue);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .today {
+            background: #5A4B7A;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(90, 75, 122, 0.5);
+        }
+
+        .gynac-day {
+            background: var(--peach);
+            color: #333;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(255, 218, 185, 0.5);
+        }
+
+        .appointment-form {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+
+        .appointment-form h3 {
+            margin: 0 0 15px;
+            color: #5A4B7A;
+        }
+
+        .appointment-form input, .appointment-form button {
+            padding: 12px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .appointment-form input:focus, .appointment-form button:focus {
+            border-color: var(--sky-blue);
+            box-shadow: 0 0 5px rgba(135, 206, 235, 0.5);
+            outline: none;
+        }
+
+        .appointment-form button {
+            background: var(--peach);
+            color: #333;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .appointment-form button:hover {
+            background: var(--sky-blue);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Section 4: Resources */
+        .resources {
+            background: var(--sky-blue);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .resource-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease;
+        }
+
+        .resource-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .resource-item img {
+            width: 100%;
+            max-height: 150px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .calendar-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .stages {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .stage {
+                max-width: 100%;
+            }
+            .week-buttons {
+                flex-direction: column;
+            }
+            .top-right-nav {
+                position: static;
+                margin-bottom: 20px;
+            }
+            .welcome {
+                height: 200px;
+                padding: 40px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .calendar-grid {
+                grid-template-columns: 1fr;
+            }
+            .welcome h2 {
+                font-size: 2em;
+            }
+            .welcome p {
+                font-size: 1em;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Top Right Navigation -->
+    <div class="top-right-nav">
+        <a href="#patient-details">Patient Info</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#calendar-section">Calendar</a>
+        <a href="#resources">Resources</a>
+    </div>
+
+    <div class="container overlay">
+        <!-- Welcome Section (Expanded) -->
+        <section class="welcome">
+            <h2>Welcome to Your Pregnancy Care!</h2>
+            <p>Your personalized journey through pregnancy starts here. Track your progress, manage appointments, and access helpful resources all in one place.</p>
+        </section>
+
+        <!-- Section 1: Patient Details -->
+        <section class="patient-details" id="patient-details">
+            <h2>Patient Information</h2>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="name" placeholder="Enter name">
+                </div>
+                <div class="form-group">
+                    <label>Blood Group</label>
+                    <input type="text" id="bloodGroup" placeholder="e.g., A+">
+                </div>
+                <div class="form-group">
+                    <label>Gynaecologist Name</label>
+                    <input type="text" id="gynacName" placeholder="Doctor's name">
+                </div>
+                <div class="form-group">
+                    <label>Gynaecologist Number</label>
+                    <input type="tel" id="gynacNumber" placeholder="Phone number">
+                </div>
+                <div class="form-group">
+                    <label>Weight (kg)</label>
+                    <input type="number" id="weight" placeholder="Enter weight">
+                </div>
+                <div class="form-group">
+                    <label>Height (cm)</label>
+                    <input type="number" id="height" placeholder="Enter height">
+                </div>
+                <div class="form-group">
+                    <label>BMI</label>
+                    <input type="text" id="bmi" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Hospital Name</label>
+                    <input type="text" id="hospital" placeholder="Hospital name">
+                </div>
+            </div>
+            <button class="save-button" onclick="savePatientInfo()">Save</button>
+            <div class="saved-info" id="savedInfo"></div>
+        </section>
+
+        <!-- Section 2: Roadmap (Full Integration) -->
+        <section class="timeline" id="roadmap">
+            <h2>Week-by-Week Roadmap</h2>
+            <div class="road-container">
+                <div class="road">
+                    <div class="car" id="car"></div>
+                </div>
+                <div class="stages">
+                    <div class="stage" data-stage="1">Trimester 1</div>
+                    <div class="stage" data-stage="2">Trimester 2</div>
+                    <div class="stage" data-stage="3">Trimester 3</div>
+                    <div class="stage" data-stage="4">Postnatal Care</div>
+                </div>
+
+                <!-- Stage Details -->
+                <div class="stage-detail" data-stage="1">
+                    <h3>Trimester 1: Weeks 1-12</h3>
+                    <ul>
+                        <li><strong>Weeks 1-2:</strong> Preconception - Prepare with folic acid, check-up</li>
+                        <li><strong>Weeks 3-4:</strong> Confirmation - Pregnancy test, first appointment</li>
+                        <li><strong>Weeks 5-6:</strong> Symptoms Begin - Track morning sickness, fatigue</li>
+                        <li><strong>Weeks 7-8:</strong> First Scan - Early ultrasound, heartbeat</li>
+                        <li><strong>Weeks 9-10:</strong> Nutrition Focus - Iron, Vitamin D, light exercise</li>
+                        <li><strong>Weeks 11-12:</strong> Risk Screening - Nuchal scan, genetic tests</li>
+                    </ul>
+                    <p><strong>App Features:</strong> Symptom tracker, reminders, safe food guide, health tips</p>
+                    
+                    <!-- Week Buttons -->
+                    <div class="week-buttons">
+                        <button class="week-btn" data-week="1-2">Weeks 1-2</button>
+                        <button class="week-btn" data-week="3-4">Weeks 3-4</button>
+                        <button class="week-btn" data-week="5-6">Weeks 5-6</button>
+                        <button class="week-btn" data-week="7-8">Weeks 7-8</button>
+                        <button class="week-btn" data-week="9-10">Weeks 9-10</button>
+                        <button class="week-btn" data-week="11-12">Weeks 11-12</button>
+                    </div>
+
+                    <!-- Week Details -->
+                    <div class="week-detail" data-week="1-2">
+                        <h4>Weeks 1-2: Preconception</h4>
+                        <table>
+                            <tr><th>📖 Educational</th><td>Learn about early signs of pregnancy, implantation process. <a href="#">Read Article</a></td></tr>
+                            <tr><th>🧘‍♀️ Yoga</th><td>Basic deep breathing & meditation to stay calm.</td></tr>
+                            <tr><th>🚶‍♀️ Exercise</th><td>Daily 15-20 mins light walking.</td></tr>
+                            <tr><th>🥗 Nutrition</th><td>Start taking folic acid supplements.</td></tr>
+                            <tr><th>🧠 Mental Health</th><td>Start a pregnancy journal.</td></tr>
+                            <tr><th>👩‍⚕️ Doctor</th><td>-</td></tr>
+                            <tr><th>🎵 Leisure</th><td>Listen to calm instrumental music.</td></tr>
+                        </table>
+                    </div>
+                    <div class="week-detail" data-week="3-4">
+                        <h4>Weeks 3-4: Confirmation</h4>
+                        <table>
+                            <tr><th>📖 Educational</th><td>Read about prenatal vitamins & folic acid importance. <a href="#">Read Article</a></td></tr>
+                            <tr><th>🧘‍♀️ Yoga</th><td>Basic deep breathing & meditation.</td></tr>
+                            <tr><th>🚶‍♀️ Exercise</th><td>Daily 15-20 mins light walking.</td></tr>
+                            <tr><th>🥗 Nutrition</th><td>Eat iron-rich foods (spinach, lentils, almonds).</td></tr>
+                            <tr><th>🧠 Mental Health</th><td>Join online forums for expectant mothers.</td></tr>
+                            <tr><th>👩‍⚕️ Doctor</th><td>First prenatal visit.</td></tr>
+                            <tr><th>🎵 Leisure</th><td>Start watching pregnancy vlogs.</td></tr>
+                        </table>
+                    </div>
+                    <div class="week-detail" data-week="5-6">
+                        <h4>Weeks 5-6: Symptoms Begin</h4>
+                        <table>
+                            <tr><th>📖 Educational</th><td>Articles on first ultrasound, what to expect in check-ups. <a href="#">Read Article</a></td></tr>
+                            <tr><th>🧘‍♀️ Yoga</th><td>Light stretching for back & leg comfort.</td></tr>
+                            <tr><th>🚶‍♀️ Exercise</th><td>Leg & ankle stretches to improve circulation.</td></tr>
+                            <tr><th>🥗 Nutrition</th><td>Track water intake (at least 8 glasses/day).</td></tr>
+                            <tr><th>🧠 Mental Health</th><td>Practice guided visualization.</td></tr>
+                            <tr><th>👩‍⚕️ Doctor</th><td>First prenatal visit (if not yet done).</td></tr>
+                            <tr><th>🎵 Leisure</th><td>Listen to baby bonding playlists.</td></tr>
+                        </table>
+                    </div>
+                    <div class="week-detail" data-week="7-8">
+                        <h4>Weeks 7-8: First Scan</h4>
+                        <table>
+                            <tr><th>📖 Educational</th><td>Learn about morning sickness and remedies. <a href="#">Read Article</a></td></tr>
+                            <tr><th>🧘‍♀️ Yoga</th><td>Start prenatal yoga basics (gentle pelvic tilts, cat-cow pose).</td></tr>
+                            <tr><th>🚶‍♀️ Exercise</th><td>Incorporate gentle pelvic floor exercises.</td></tr>
+                            <tr><th>🥗 Nutrition</th><td>Focus on small frequent meals to manage nausea.</td></tr>
+                            <tr><th>🧠 Mental Health</th><td>Attend online sessions with counselors if anxious.</td></tr>
+                            <tr><th>👩‍⚕️ Doctor</th><td>Ultrasound to check baby heartbeat.</td></tr>
+                            <tr><th>🎵 Leisure</th><td>Explore pregnancy-safe DIY projects.</td></tr>
+                        </table>
+                    </div>
+                    <div class="week-detail" data-week="9-10">
+                        <h4>Weeks 9-10: Nutrition Focus</h4>
+                        <table>
+                            <tr><th>📖 Educational</th><td>Explore fetal development stages. <a href="#">Read Article</a></td></tr>
+                            <tr><th>🧘‍♀️ Yoga</th><td>Add guided relaxation sessions.</td></tr>
+                            <tr><th>🚶‍♀️ Exercise</th><td>Add arm & shoulder stretches (for posture support).</td></tr>
+                            <tr><th>🥗 Nutrition</th><td>Add calcium-rich foods (milk, paneer, broccoli).</td></tr>
+                            <tr><th>🧠 Mental Health</th><td>Try art therapy or coloring books.</td></tr>
+                            <tr><th>👩‍⚕️ Doctor</th><td>Blood tests for early screening.</td></tr>
+                            <tr><th>🎵 Leisure</th><td>Start shopping list planning.</td></tr>
+                        </table>
+                    </div>
+                    <div class="week-detail" data-week="11-12">
+                        <h4>Weeks 11-12: Risk Screening</h4>
+                        <table>
+                            <tr><th>📖 Educational</th><td>Articles on safe skincare & beauty routines. <a href="#">Read Article</a></td></tr>
+                            <tr><th>🧘‍♀️ Yoga</th><td>Focus on spine-friendly stretches and gentle side bends.</td></tr>
+                            <tr><th>🚶‍♀️ Exercise</th><td>Try prenatal dance or light aerobics (with approval).</td></tr>
+                            <tr><th>🥗 Nutrition</th><td>Explore healthy snacks (yogurt with fruits, dry fruits).</td></tr>
+                            <tr><th>🧠 Mental Health</th><td>Create a pregnancy vision board.</td></tr>
+                            <tr><th>👩‍⚕️ Doctor</th><td>NT Scan for Down Syndrome screening.</td></tr>
+                            <tr><th>🎵 Leisure</th><td>Plan a mini getaway or picnic.</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="stage-detail" data-stage="2">
+                    <h3>Trimester 2: Weeks 13-28</h3>
+                    <ul>
+                        <li><strong>Weeks 13-14:</strong> Energy Returns - Start prenatal yoga</li>
+                        <li><strong>Weeks 15-16:</strong> Milestone - Gender detection, AFP test</li>
+                        <li><strong>Weeks 17-18:</strong> Movement Begins - Log baby kicks</li>
+                        <li><strong>Weeks 19-20:</strong> Anatomy Scan - Detailed ultrasound</li>
+                        <li><strong>Weeks 21-22:</strong> Emotional Health - Stress monitoring</li>
+                        <li><strong>Weeks 23-24:</strong> Glucose Test - Diabetes screening</li>
+                        <li><strong>Weeks 25-26:</strong> Diet Check - Balanced meals</li>
+                        <li><strong>Weeks 27-28:</strong> Final Tests - BP, hemoglobin check</li>
+                    </ul>
+                    <p><strong>App Features:</strong> Kick counter, diet tracking, community support</p>
+
+                    <!-- Week Buttons -->
+                    <div class="week-buttons">
+                        <button class="week-btn" data-week="13-14">Weeks 13-14</button>
+                        <button class="week-btn" data-week="15-16">Weeks 15-16</button>
+                        <button class="week-btn" data-week="17-18">Weeks 17-18</button>
+                        <button class="week-btn" data-week="19-20">Weeks 19-20</button>
+                        <button class="week-btn" data-week="21-22">Weeks 21-22</button>
+                        <button class="week-btn" data-week="23-24">Weeks 23-24</button>
+                        <button class="week-btn" data-week="25-27">Weeks 25-27</button>
+                    </div>
+
+                    <!-- Week Details -->
+                    <div class="week-detail" data-week="13-14">
+                        <h4>Weeks 13-14: Energy Returns</h4>
+                        <table>
+                            <tr><th>📖 Educational</th><td>Learn about 2nd Trimester changes. <a href="#">Read Article</a></td></tr>
+                            <tr><th>🧘‍♀️ Yoga</th><td>Continue deep breathing & light stretching.</td></tr>
+                            <tr><th>🚶‍♀️ Exercise</th><td>20-minute brisk walks daily.</td></tr>
+                            <tr><th>🥗 Nutrition</th><td>Focus on fiber-rich foods.</td></tr>
+                            <tr><th>🧠 Mental Health</th><td>Start affirmation practice.</td></tr>
+                            <tr><th>👩‍⚕️ Doctor</th><td>-</td></tr>
+                            <tr><th>🎵 Leisure</th><td>Listen to prenatal podcasts.</td></tr>
+                        </table>
+                    </div>
+                    <div class="week-detail" data-week="15-16">
+                        <h4>Weeks 15-16: Milestone</h4>
+                        <table>
+                            <tr><th>📖 Educational</th><td>Articles on baby’s sensory development. <a href="#">Read Article</a></td></tr>
+                            <tr><th>🧘‍♀️ Yoga</th><td>Add hip openers and gentle squats.</td></tr>
+                            <tr><th>🚶‍♀️ Exercise</th><td>Light resistance band workouts.</td></tr>
+                            <tr><th>🥗 Nutrition</th><td>Add protein-packed snacks (eggs, nuts).</td></tr>
+                            <tr><th>🧠 Mental Health</th><td>Join online mom communities.</td></tr>
+                            <tr><th>👩‍⚕️ Doctor</th><td>Anomaly Scan.</td></tr>
+                            <tr><th>🎵 Leisure</th><td>Create a pregnancy memory scrapbook.</td></tr>
+                        </table>
+                    </div>
+                    <div class="week-detail" data-week="17-18">
+                        <h4>Weeks 17-18: Movement Begins</h4>
+                        <table>
+                            <tr><th>📖 Educational</th><td>Read about gestational diabetes prevention. <a href="#">Read Article</a></td></tr>
+                            <tr><th>🧘‍♀️ Yoga</th><td>Practice pelvic tilts & side stretches.</td></tr>
+                            <tr><th>🚶‍♀️ Exercise</th><td>Try prenatal water aerobics.</td></tr>
+                            <tr><th>🥗 Nutrition</th><td>Maintain balanced intake of calcium & iron.</td></tr>
+                            <tr><th>🧠 Mental Health</th><td>Schedule self-care days.</td></tr>
+                            <tr><th>👩‍⚕️ Doctor</th><td>-</td></tr>
+                            <tr><th>🎵 Leisure</th><td>Watch baby documentaries.</td></tr>
+                        </table>
+                    </div>
+                    <div class="week-detail" data-week="19-20">
+                        <h4>Weeks 19-20: Anatomy Scan</h4>
+                        <table>
+                            <tr><th>📖 Educational</th><td>Learn about anomaly scan. <a href="#">Read Article</a></td></tr>
+                            <tr><th>🧘‍♀️ Yoga</th><td>Focus on gentle prenatal flows.</td></tr>
+                            <tr><th>🚶‍♀️ Exercise</th><td>Introduce birth ball exercises.</td></tr>
+                            <tr><th>🥗 Nutrition</th><td>Hydrate with coconut water & herbal teas.</td></tr>
+                            <tr><th>🧠 Mental Health</th><td>Learn stress relief techniques.</td></tr>
+                            <tr><th>👩‍⚕️ Doctor</th><td>Detailed fetal growth scan.</td></tr>
+                            <tr><th>🎵 Leisure</th><td>Plan baby shower or gender reveal.</td></tr>
+                        </table>
+                    </div>
+                    <div class="week-detail" data-week="21-22">
+                        <h4>Weeks 21-22: Emotional Health</h4>
+                        <table>
+                            <tr><th>📖 Educational</th><td>Explore prenatal bonding techniques. <a href="#">Read Article</a></td></tr>
+                            <tr><th>🧘‍♀️ Yoga</th><td>Include lower back stretches & supported lunges.</td></tr>
+                            <tr><th>🚶‍♀️ Exercise</th><td>Daily pelvic floor exercises.</td></tr>
+                            <tr><th>🥗 Nutrition</th><td>Track calorie intake.</td></tr>
+                            <tr><th>🧠 Mental Health</th><td>Consider prenatal counseling.</td></tr>
+                            <tr><th>👩‍⚕️ Doctor</th><td>-</td></tr>
+                            <tr><th>🎵 Leisure</th><td>Create a baby shopping checklist.</td></tr>
+                        </table>
+                    </div>
+                    <div class="week-detail" data-week="23-24">
+                        <h4>Weeks 23-24: Glucose Test</h4>
+                        <table>
+                            <tr><th>📖 Educational</th><td>Read about preparing for baby’s movement tracking. <a href="#">Read Article</a></td></tr>
+                            <tr><th>🧘‍♀️ Yoga</th><td>Guided relaxation for better sleep.</td></tr>
+                            <tr><th>🚶‍♀️ Exercise</th><td>Squats and light lower body strengthening.</td></tr>
+                            <tr><th>🥗 Nutrition</th><td>Eat magnesium-rich foods (avocados, bananas).</td></tr>
+                            <tr><th>🧠 Mental Health</th><td>Practice visualizing birth positivity.</td></tr>
+                            <tr><th>👩‍⚕️ Doctor</th><td>Glucose tolerance test.</td></tr>
+                            <tr><th>🎵 Leisure</th><td>Relax with soothing prenatal massages.</td></tr>
+                        </table>
+                    </div>
+                    <div class="week-detail" data-week="25-27">
+                        <h4>Weeks 25-27: Diet Check</h4>
+                        <table>
+                            <tr><th>📖 Educational</th><td>Learn about early signs of preterm labor. <a href="#">Read Article</a></td></tr>
+                            <tr><th>🧘‍♀️ Yoga</th><td>Focus on hip circles & labor positions.</td></tr>
+                            <tr><th>🚶‍♀️ Exercise</th><td>Practice labor-friendly positions.</td></tr>
+                            <tr><th>🥗 Nutrition</th><td>Emphasize omega-3 foods.</td></tr>
+                            <tr><th>🧠 Mental Health</th><td>Create a birth preferences list.</td></tr>
+                            <tr><th>👩‍⚕️ Doctor</th><td>Routine check-up + blood pressure screening.</td></tr>
+                            <tr><th>🎵 Leisure</th><td>Start nursery setup planning.</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="stage-detail" data-stage="3">
+                    <h3>Trimester 3: Weeks 29-40</h3>
+                    <ul>
+                        <li><strong>Weeks 29-30:</strong> Birth Prep - Prenatal classes</li>
+                        <li><strong>Weeks 31-32:</strong> Growth Scan - Baby’s position & weight</li>
+                        <li><strong>Weeks 33-34:</strong> Baby Bag - Pack hospital bag</li>
+                        <li><strong>Weeks 35-36:</strong> Position Check - Head-down position</li>
+                        <li><strong>Weeks 37-38:</strong> Final Screening - Cervix dilation, BP</li>
+                        <li><strong>Weeks 39-40:</strong> Delivery Watch - Monitor contractions</li>
+                    </ul>
+                    <p><strong>App Features:</strong> Contraction timer, checklist, emergency contacts</p>
+
+                    <!-- Week Buttons -->
+                    <div class="week-buttons">
+                        <button class="week-btn" data-week="28-30">Weeks 28-30</button>
+                        <button class="week-btn" data-week="31-32">Weeks 31-32</button>
+                        <button class="week-btn" data-week="33-34">Weeks 33-34</button>
+                        <button class="week-btn" data-week="35-36">Weeks 35-36</button>
+                        <button class="week-btn" data-week="37-38">Weeks 37-38</button>
+                        <button class="week-btn" data-week="39-40">Weeks 39-40</button>
+                    </div>
+
+                    <!-- Week Details -->
+                    <div class="week-detail" data-week="28-30">
+                        <h4>Weeks 28-30: Birth Prep</h4>
+                        <table>
+                            <tr><th>📖 Educational</th><td>Learn about stages of labor & delivery options. <a href="#">Read Article</a></td></tr>
+                            <tr><th>🧘‍♀️ Yoga</th><td>Continue gentle stretches & breathing practice.</td></tr>
+                            <tr><th>🚶‍♀️ Exercise</th><td>Daily slow walks to relieve back pain.</td></tr>
+                            <tr><th>🥗 Nutrition</th><td>Increase iron & calcium intake.</td></tr>
+                            <tr><th>🧠 Mental Health</th><td>Journaling birth fears & hopes.</td></tr>
+                            <tr><th>👩‍⚕️ Doctor</th><td>Growth scan & regular check-up.</td></tr>
+                            <tr><th>🎵 Leisure</th><td>Create hospital playlist.</td></tr>
+                        </table>
+                    </div>
+                    <div class="week-detail" data-week="31-32">
+                        <h4>Weeks 31-32: Growth Scan</h4>
+                        <table>
+                            <tr><th>📖 Educational</th><td>Read about pain relief methods. <a href="#">Read Article</a></td></tr>
+                            <tr><th>🧘‍♀️ Yoga</th><td>Focus on hip openers & back relief.</td></tr>
+                            <tr><th>🚶‍♀️ Exercise</th><td>Pelvic tilts & prenatal squats.</td></tr>
+                            <tr><th>🥗 Nutrition</th><td>Eat fiber-rich meals.</td></tr>
+                            <tr><th>🧠 Mental Health</th><td>Attend online birthing classes.</td></tr>
+                            <tr><th>👩‍⚕️ Doctor</th><td>Blood pressure & weight check.</td></tr>
+                            <tr><th>🎵 Leisure</th><td>Plan photo session for bump memories.</td></tr>
+                        </table>
+                    </div>
+                    <div class="week-detail" data-week="33-34">
+                        <h4>Weeks 33-34: Baby Bag</h4>
+                        <table>
+                            <tr><th>📖 Educational</th><td>Research newborn care. <a href="#">Read Article</a></td></tr>
+                            <tr><th>🧘‍♀️ Yoga</th><td>Practice labor breathing techniques.</td></tr>
+                            <tr><th>🚶‍♀️ Exercise</th><td>Use a birthing ball for gentle exercises.</td></tr>
+                            <tr><th>🥗 Nutrition</th><td>Focus on high protein & light carbs.</td></tr>
+                            <tr><th>🧠 Mental Health</th><td>Practice birth affirmations.</td></tr>
+                            <tr><th>👩‍⚕️ Doctor</th><td>-</td></tr>
+                            <tr><th>🎵 Leisure</th><td>Finish nursery setup.</td></tr>
+                        </table>
+                    </div>
+                    <div class="week-detail" data-week="35-36">
+                        <h4>Weeks 35-36: Position Check</h4>
+                        <table>
+                            <tr><th>📖 Educational</th><td>Read about hospital bag checklist. <a href="#">Read Article</a></td></tr>
+                            <tr><th>🧘‍♀️ Yoga</th><td>Include gentle squats & perineal massage.</td></tr>
+                            <tr><th>🚶‍♀️ Exercise</th><td>Walking after meals for digestion.</td></tr>
+                            <tr><th>🥗 Nutrition</th><td>Small frequent meals.</td></tr>
+                            <tr><th>🧠 Mental Health</th><td>Partner bonding sessions.</td></tr>
+                            <tr><th>👩‍⚕️ Doctor</th><td>Cervical check & final positioning scan.</td></tr>
+                            <tr><th>🎵 Leisure</th><td>Enjoy date nights.</td></tr>
+                        </table>
+                    </div>
+                    <div class="week-detail" data-week="37-38">
+                        <h4>Weeks 37-38: Final Screening</h4>
+                        <table>
+                            <tr><th>📖 Educational</th><td>Learn about postpartum care & recovery. <a href="#">Read Article</a></td></tr>
+                            <tr><th>🧘‍♀️ Yoga</th><td>Guided meditations for fear release.</td></tr>
+                            <tr><th>🚶‍♀️ Exercise</th><td>Practice labor-friendly movements.</td></tr>
+                            <tr><th>🥗 Nutrition</th><td>Drink raspberry leaf tea (if approved).</td></tr>
+                            <tr><th>🧠 Mental Health</th><td>Keep a go-bag ready.</td></tr>
+                            <tr><th>👩‍⚕️ Doctor</th><td>-</td></tr>
+                            <tr><th>🎵 Leisure</th><td>Relax with warm baths & aromatherapy.</td></tr>
+                        </table>
+                    </div>
+                    <div class="week-detail" data-week="39-40">
+                        <h4>Weeks 39-40: Delivery Watch</h4>
+                        <table>
+                            <tr><th>📖 Educational</th><td>Review signs of labor & emergency actions. <a href="#">Read Article</a></td></tr>
+                            <tr><th>🧘‍♀️ Yoga</th><td>Focus on relaxation & visualization.</td></tr>
+                            <tr><th>🚶‍♀️ Exercise</th><td>Focus on rest & gentle stretching.</td></tr>
+                            <tr><th>🥗 Nutrition</th><td>Stay hydrated & eat energy-rich snacks.</td></tr>
+                            <tr><th>🧠 Mental Health</th><td>Focus on mindfulness.</td></tr>
+                            <tr><th>👩‍⚕️ Doctor</th><td>Weekly check-ups & labor preparedness.</td></tr>
+                            <tr><th>🎵 Leisure</th><td>Stay home & rest.</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="stage-detail" data-stage="4">
+                    <h3>Postnatal Care: Weeks 1-12 After Delivery</h3>
+                    <ul>
+                        <li><strong>Week 1:</strong> Recovery - Monitor bleeding, emotional health</li>
+                        <li><strong>Week 2:</strong> Baby Feeding - Track breastfeeding/formula</li>
+                        <li><strong>Weeks 3-4:</strong> Baby Checkup - Pediatric visit, vaccines</li>
+                        <li><strong>Weeks 5-6:</strong> Emotional Support - Postpartum screening</li>
+                        <li><strong>Weeks 7-8:</strong> Diet & Fitness - Light exercise</li>
+                        <li><strong>Weeks 9-12:</strong> Routine - Return to work, baby milestones</li>
+                    </ul>
+                    <p><strong>App Features:</strong> Vaccine tracker, feeding log, milestone tracker</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Enhanced Calendar -->
+        <section class="calendar-section" id="calendar-section">
+            <div class="calendar-header">
+                <h2>2025 Pregnancy Calendar</h2>
+                <div id="currentTime"></div>
+            </div>
+            <div class="calendar-grid" id="calendar"></div>
+            <div class="appointment-form">
+                <h3>Add Appointment</h3>
+                <input type="date" id="apptDate">
+                <input type="text" id="apptDetails" placeholder="Appointment details">
+                <button onclick="addAppointment()">Add</button>
+            </div>
+        </section>
+
+        <!-- Section 4: Resources -->
+        <section class="resources" id="resources">
+            <h2>Helpful Resources</h2>
+            <div class="resource-grid">
+                <div class="resource-item">
+                    <img src="https://img.youtube.com/vi/E0i7NQsJdWY/0.jpg" alt="Pregnancy Tips">
+                    <a href="https://youtu.be/E0i7NQsJdWY?si=klEOpLv3n8lC_x0e">Pregnancy Tips Video</a>
+                </div>
+                <div class="resource-item">
+                    <img src="https://img.youtube.com/vi/8BH7WFmRs-E/0.jpg" alt="Exercise Guide">
+                    <a href="https://youtu.be/8BH7WFmRs-E?si=pIQPFlyQCH3EgYqQ">Exercise Guide</a>
+                </div>
+                <div class="resource-item">
+                    <img src="https://magazine.medlineplus.gov/images/pregnancy-icon.png" alt="Pregnancy Article">
+                    <a href="https://magazine.medlineplus.gov/topic/pregnancy">Pregnancy Basics</a>
+                </div>
+                <div class="resource-item">
+                    <img src="https://media.springernature.com/w200/springer-static/cover-hires/journal/12884" alt="Research Article">
+                    <a href="https://bmcpregnancychildbirth.biomedcentral.com/articles/10.1186/s12884-018-2087-4">Research Paper</a>
+                </div>
+                <div class="resource-item">
+                    <img src="https://img.youtube.com/vi/F_ssj7-8rYg/0.jpg" alt="Nutrition Guide">
+                    <a href="https://youtu.be/F_ssj7-8rYg?si=31d1T1_qmvjGlF73">Nutrition Guide</a>
+                </div>
+                <div class="resource-item">
+                    <img src="https://img.youtube.com/vi/9o_Kxcss1u8/0.jpg" alt="Yoga Video">
+                    <a href="https://youtu.be/9o_Kxcss1u8?si=_k71Z3w5qKde3LPE">Prenatal Yoga</a>
+                </div>
+                <div class="resource-item">
+                    <img src="https://img.youtube.com/vi/dq7ovxsAfX8/0.jpg" alt="Birth Prep">
+                    <a href="https://youtu.be/dq7ovxsAfX8?si=Ad14O7r_eknggDQE">Birth Preparation</a>
+                </div>
+                <div class="resource-item">
+                    <img src="https://www.ncbi.nlm.nih.gov/books/NBK279571/bin/cover.jpg" alt="Postpartum">
+                    <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2582416/">Postpartum Care</a>
+                </div>
+                <div class="resource-item">
+                    <img src="https://my.clevelandclinic.org/-/scassets/images/org/health/articles/pregnancy-complications" alt="Complications">
+                    <a href="https://my.clevelandclinic.org/health/articles/24442-pregnancy-complications">Complications Guide</a>
+                </div>
+                <div class="resource-item">
+                    <img src="https://kidshealth.org/-/media/images/kidshealth-logo.png" alt="Pregnancy Health">
+                    <a href="https://kidshealth.org/en/parents/preg-health.html">Pregnancy Health</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // BMI Calculation
+        document.getElementById('weight').addEventListener('input', calculateBMI);
+        document.getElementById('height').addEventListener('input', calculateBMI);
+
+        function calculateBMI() {
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value) / 100;
+            if (weight && height) {
+                const bmi = (weight / (height * height)).toFixed(1);
+                document.getElementById('bmi').value = bmi;
+            }
+        }
+
+        // Save Patient Info
+        function savePatientInfo() {
+            const name = document.getElementById('name').value;
+            const bloodGroup = document.getElementById('bloodGroup').value;
+            const gynacName = document.getElementById('gynacName').value;
+            const gynacNumber = document.getElementById('gynacNumber').value;
+            const weight = document.getElementById('weight').value;
+            const height = document.getElementById('height').value;
+            const bmi = document.getElementById('bmi').value;
+            const hospital = document.getElementById('hospital').value;
+
+            const savedInfo = document.getElementById('savedInfo');
+            savedInfo.style.display = 'block';
+            savedInfo.innerHTML = `
+                <h3>Saved Patient Information</h3>
+                <p><strong>Name:</strong> ${name || 'Not provided'}</p>
+                <p><strong>Blood Group:</strong> ${bloodGroup || 'Not provided'}</p>
+                <p><strong>Gynaecologist Name:</strong> ${gynacName || 'Not provided'}</p>
+                <p><strong>Gynaecologist Number:</strong> ${gynacNumber || 'Not provided'}</p>
+                <p><strong>Weight (kg):</strong> ${weight || 'Not provided'}</p>
+                <p><strong>Height (cm):</strong> ${height || 'Not provided'}</p>
+                <p><strong>BMI:</strong> ${bmi || 'Not calculated'}</p>
+                <p><strong>Hospital Name:</strong> ${hospital || 'Not provided'}</p>
+            `;
+        }
+
+        // Roadmap Functionality
+        const stages = document.querySelectorAll('.stage');
+        const car = document.getElementById('car');
+        const details = document.querySelectorAll('.stage-detail');
+
+        stages.forEach(stage => {
+            stage.addEventListener('click', () => {
+                stages.forEach(s => s.classList.remove('active'));
+                details.forEach(d => d.classList.remove('active'));
+                stage.classList.add('active');
+                const stageNum = stage.getAttribute('data-stage');
+                document.querySelector(`.stage-detail[data-stage="${stageNum}"]`).classList.add('active');
+                const positions = ['0%', '33%', '66%', '100%'];
+                car.style.left = positions[stageNum - 1];
+
+                // Reset week details
+                const weekDetails = document.querySelectorAll('.week-detail');
+                weekDetails.forEach(wd => wd.classList.remove('active'));
+                const weekBtns = document.querySelectorAll('.week-btn');
+                weekBtns.forEach(wb => wb.classList.remove('active'));
+            });
+        });
+
+        const weekButtons = document.querySelectorAll('.week-btn');
+        weekButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const stageDetail = button.closest('.stage-detail');
+                const weekDetails = stageDetail.querySelectorAll('.week-detail');
+                const weekBtns = stageDetail.querySelectorAll('.week-btn');
+                
+                weekDetails.forEach(wd => wd.classList.remove('active'));
+                weekBtns.forEach(wb => wb.classList.remove('active'));
+
+                button.classList.add('active');
+                const weekNum = button.getAttribute('data-week');
+                stageDetail.querySelector(`.week-detail[data-week="${weekNum}"]`).classList.add('active');
+            });
+        });
+
+        stages[0].classList.add('active');
+        details[0].classList.add('active');
+
+        // Time Update (IST)
+        function updateTime() {
+            const now = new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
+            document.getElementById('currentTime').textContent = `Current Time (IST): ${now}`;
+        }
+        setInterval(updateTime, 1000);
+
+        // Calendar Generation
+        function generateCalendar() {
+            const calendar = document.getElementById('calendar');
+            const today = new Date('2025-03-01');
+            const months = [];
+            for (let i = 0; i < 12; i++) {
+                const month = new Date(2025, i, 1);
+                const monthName = month.toLocaleString('default', { month: 'long' });
+                let days = '';
+                const daysInMonth = new Date(2025, i + 1, 0).getDate();
+                for (let d = 1; d <= daysInMonth; d++) {
+                    const date = new Date(2025, i, d);
+                    const isToday = date.toDateString() === today.toDateString();
+                    const isGynacDay = d === 4 && i >= 2; // 4th of each month from March
+                    days += `<span ${isToday ? 'class="today"' : ''} ${isGynacDay ? 'class="gynac-day"' : ''}>${d}</span>`;
+                }
+                months.push(`<div class="month"><h3>${monthName}</h3><div>${days}</div></div>`);
+            }
+            calendar.innerHTML = months.join('');
+        }
+        generateCalendar();
+
+        // Appointment Management
+        const appointments = {};
+        function addAppointment() {
+            const date = document.getElementById('apptDate').value;
+            const details = document.getElementById('apptDetails').value;
+            if (date && details) {
+                appointments[date] = details;
+                alert(`Appointment added for ${date}: ${details}`);
+                checkAppointments();
+            }
+        }
+
+        function checkAppointments() {
+            const today = new Date('2025-03-01');
+            Object.keys(appointments).forEach(date => {
+                const apptDate = new Date(date);
+                const diffDays = Math.ceil((apptDate - today) / (1000 * 60 * 60 * 24));
+                if (diffDays === 3) {
+                    alert(`Reminder: Appointment in 3 days on ${date}: ${appointments[date]}`);
+                }
+            });
+            for (let i = 2; i < 12; i++) {
+                const gynacDate = `2025-${String(i + 1).padStart(2, '0')}-04`;
+                const apptDate = new Date(gynacDate);
+                const diffDays = Math.ceil((apptDate - today) / (1000 * 60 * 60 * 24));
+                // if (diffDays === 3) {
+                //     alert(`Reminder: Monthly Gynac video call in 3 days on ${gynacDate}`);
+                // }
+            }
+        }
+        checkAppointments();
+    </script>
+</body>
+</html>
